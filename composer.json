@@ -1,0 +1,35 @@
+{
+    "name": "anomaly/fizl-module",
+    "type": "streams-addon",
+    "description": "A static file content manager.",
+    "keywords": [
+        "module",
+        "streams-platform",
+        "laravel"
+    ],
+    "homepage": "http://anomaly.is/",
+    "version": "1.0.0",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "AnomalyLabs, Inc.",
+            "email": "hello@anomaly.is",
+            "homepage": "http://anomaly.is/",
+            "role": "Owner"
+        }
+    ],
+    "support": {
+        "email": "support@anomaly.is"
+    },
+    "autoload": {
+        "psr-4": {
+            "Anomaly\\FizlModule\\": "src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "minimum-stability": "dev"
+}

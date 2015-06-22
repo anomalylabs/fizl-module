@@ -1,4 +1,3 @@
-fizl-module
-===========
+# Fizl Module
 
-Static site generator.
+A static file content manager.
