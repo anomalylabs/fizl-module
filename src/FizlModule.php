@@ -13,4 +13,11 @@ use Anomaly\Streams\Platform\Addon\Module\Module;
 class FizlModule extends Module
 {
 
+    /**
+     * The module icon.
+     *
+     * @var string
+     */
+    protected $icon = 'fire';
+
 }
