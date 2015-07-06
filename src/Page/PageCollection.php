@@ -29,7 +29,7 @@ class PageCollection extends Collection
 
             $key = str_replace($path . '/', '', $item->getPath());
 
-            if (strpos($key, '/') === false) {
+            if (strpos($key, '/') === false || $path == $item->getPath()) {
                 $pages[] = $item;
             }
         }
