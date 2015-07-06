@@ -21,6 +21,13 @@ class PageResponse
     protected $factory;
 
     /**
+     * The template loader.
+     *
+     * @var PageTemplate
+     */
+    protected $template;
+
+    /**
      * The response factory.
      *
      * @var ResponseFactory
@@ -31,11 +38,13 @@ class PageResponse
      * Create a new PageResponse instance.
      *
      * @param PageFactory     $factory
+     * @param PageTemplate    $template
      * @param ResponseFactory $response
      */
-    public function __construct(PageFactory $factory, ResponseFactory $response)
+    public function __construct(PageFactory $factory, PageTemplate $template, ResponseFactory $response)
     {
         $this->factory  = $factory;
+        $this->template = $template;
         $this->response = $response;
     }
 
@@ -48,6 +57,8 @@ class PageResponse
     public function make($path)
     {
         $page = $this->factory->make($path);
+
+        $this->template->load($page);
 
         $response = $this->response->make();
 
@@ -66,6 +77,6 @@ class PageResponse
     {
         $response = $this->make($path);
 
-        return $response->send();
+        return $response->sendHeaders();
     }
 }

@@ -1,6 +1,6 @@
 <?php namespace Anomaly\FizlModule;
 
-use Anomaly\FizlModule\Page\PageIterator;
+use Anomaly\FizlModule\Page\PageRepository;
 
 /**
  * Class FizlModulePluginFunctions
@@ -14,43 +14,36 @@ class FizlModulePluginFunctions
 {
 
     /**
-     * The page iterator.
+     * The page repository.
      *
-     * @var PageIterator
+     * @var PageRepository
      */
-    protected $iterator;
+    protected $pages;
 
     /**
      * Create a new FizlModulePluginFunctions instance.
      *
-     * @param PageIterator $iterator
+     * @param PageRepository $pages
      */
-    public function __construct(PageIterator $iterator)
+    public function __construct(PageRepository $pages)
     {
-        $this->iterator = $iterator;
+        $this->pages = $pages;
     }
 
     /**
-     * Return the page map from a given path.
+     * Return Fizl pages.
      *
-     * @param $path
+     * @param null $path
      * @return Page\PageCollection
      */
-    public function map($path)
+    public function pages($path = null)
     {
-        return $this->iterator->map($path);
-    }
+        $pages = $this->pages->all();
 
-    /**
-     * Return pages in a give path.
-     *
-     * @param $path
-     * @return Page\PageCollection
-     */
-    public function pages($path)
-    {
-        $map = $this->map($path);
+        if ($path) {
+            return $pages->in($path);
+        }
 
-        return $map->pages($path);
+        return $pages;
     }
 }

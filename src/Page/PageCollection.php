@@ -14,11 +14,11 @@ class PageCollection extends Collection
 {
 
     /**
-     * Return only pages.
+     * Return pages within a path.
      *
      * @return PageCollection
      */
-    public function pages($path)
+    public function in($path)
     {
         $pages = [];
 
@@ -29,7 +29,15 @@ class PageCollection extends Collection
 
             $key = str_replace($path . '/', '', $item->getPath());
 
-            if (strpos($key, '/') === false || $path == $item->getPath()) {
+            /**
+             * Skip index files because they
+             * belong 1 level higher.
+             */
+            if (ends_with($key, '/index')) {
+                continue;
+            }
+
+            if (strpos($key, '/') === false) {
                 $pages[] = $item;
             }
         }

@@ -14,6 +14,13 @@ class PageTemplate
 {
 
     /**
+     * The page repository.
+     *
+     * @var PageRepository
+     */
+    protected $pages;
+
+    /**
      * The view template.
      *
      * @var ViewTemplate
@@ -23,10 +30,12 @@ class PageTemplate
     /**
      * Create a new PageTemplate instance.
      *
-     * @param ViewTemplate $template
+     * @param PageRepository $pages
+     * @param ViewTemplate   $template
      */
-    public function __construct(ViewTemplate $template)
+    public function __construct(ViewTemplate $template, PageRepository $pages)
     {
+        $this->pages    = $pages;
         $this->template = $template;
     }
 
@@ -40,5 +49,7 @@ class PageTemplate
         $this->template->set('page', $page);
 
         $this->template->set('title', array_get($page->getData(), 'title'));
+
+        array_set($page, 'fizl', ['pages' => $this->pages->all()]);
     }
 }

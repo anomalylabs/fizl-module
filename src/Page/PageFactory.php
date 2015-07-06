@@ -26,13 +26,6 @@ class PageFactory
     protected $resolver;
 
     /**
-     * The page template loader.
-     *
-     * @var PageTemplate
-     */
-    protected $template;
-
-    /**
      * The page activator.
      *
      * @var PageActivator
@@ -51,20 +44,17 @@ class PageFactory
      *
      * @param PageData       $data
      * @param PageResolver   $resolver
-     * @param PageTemplate   $template
      * @param PageActivator  $activator
      * @param PageBreadcrumb $breadcrumb
      */
     public function __construct(
         PageData $data,
         PageResolver $resolver,
-        PageTemplate $template,
         PageActivator $activator,
         PageBreadcrumb $breadcrumb
     ) {
         $this->data       = $data;
         $this->resolver   = $resolver;
-        $this->template   = $template;
         $this->activator  = $activator;
         $this->breadcrumb = $breadcrumb;
     }
@@ -80,7 +70,6 @@ class PageFactory
         $page = $this->resolver->resolve($path);
 
         $this->data->load($page);
-        $this->template->load($page);
         $this->breadcrumb->build($page);
         $this->activator->activate($page);
 

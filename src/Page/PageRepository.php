@@ -4,14 +4,14 @@ use Anomaly\Streams\Platform\Application\Application;
 use Illuminate\Filesystem\Filesystem;
 
 /**
- * Class PageIterator
+ * Class PageRepository
  *
  * @link          http://anomaly.is/streams-platform
  * @author        AnomalyLabs, Inc. <hello@anomaly.is>
  * @author        Ryan Thompson <ryan@anomaly.is>
  * @package       Anomaly\FizlModule\Page
  */
-class PageIterator
+class PageRepository
 {
 
     /**
@@ -43,7 +43,7 @@ class PageIterator
     protected $application;
 
     /**
-     * Create a new PageIterator instance.
+     * Create a new PageRepository instance.
      *
      * @param PagePath    $path
      * @param Filesystem  $files
@@ -59,31 +59,19 @@ class PageIterator
     }
 
     /**
-     * Return pages in a given path.
+     * Return all pages.
      *
-     * @param $directory
      * @return PageCollection
      */
-    public function map($directory)
+    public function all()
     {
-        $pages = new PageCollection();
-
-        $files = $this->files->allFiles($this->application->getStoragePath('fizl/views/content/' . $directory));
-
-        /* @var \SplFileInfo $file */
-        foreach ($files as $file) {
-
-            $path = $this->path->shorten($file->getRealPath());
-
-            $key = trim(ltrim(str_replace($directory, '', $path), '/'), '/');
-
-            if (ends_with($key, '/index')) {
-                $key = dirname($key);
-            }
-
-            $pages->put($key, $this->factory->make($this->path->transform($path)));
-        }
-
-        return $pages;
+        return new PageCollection(
+            array_map(
+                function (\SplFileInfo $file) {
+                    return $this->factory->make($this->path->transform($file->getRealPath()));
+                },
+                $this->files->allFiles($this->application->getStoragePath('fizl/views/content'))
+            )
+        );
     }
 }
