@@ -48,7 +48,7 @@ class PageMapper
      */
     public function locate($path)
     {
-        $path = 'fizl::' . $path;
+        $path = 'storage::fizl/content/' . str_replace('.', '-', $path);
 
         if ($this->view->exists($path) || $this->view->exists($path .= '/index')) {
             return $path;
