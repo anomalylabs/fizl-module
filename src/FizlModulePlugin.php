@@ -38,7 +38,8 @@ class FizlModulePlugin extends Plugin
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('fizl_map', [$this->functions, 'map'])
+            new \Twig_SimpleFunction('fizl_map', [$this->functions, 'map']),
+            new \Twig_SimpleFunction('fizl_pages', [$this->functions, 'pages'])
         ];
     }
 }

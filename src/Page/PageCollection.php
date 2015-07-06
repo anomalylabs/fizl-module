@@ -22,6 +22,8 @@ class PageCollection extends Collection
     {
         $pages = [];
 
+        $path = str_replace(['.'], '-', $path);
+
         /* @var Page $item */
         foreach ($this->items as $item) {
 

@@ -40,4 +40,17 @@ class FizlModulePluginFunctions
     {
         return $this->iterator->map($path);
     }
+
+    /**
+     * Return pages in a give path.
+     *
+     * @param $path
+     * @return Page\PageCollection
+     */
+    public function pages($path)
+    {
+        $map = $this->map($path);
+
+        return $map->pages($path);
+    }
 }
