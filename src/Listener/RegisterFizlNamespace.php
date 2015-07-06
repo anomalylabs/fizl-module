@@ -67,6 +67,6 @@ class RegisterFizlNamespace
     {
         $this->asset->addPath('fizl', $this->application->getStoragePath('fizl/resources'));
         $this->image->addPath('fizl', $this->application->getStoragePath('fizl/resources'));
-        $this->view->addNamespace('fizl', $this->application->getStoragePath('fizl/content'));
+        $this->view->addNamespace('fizl', $this->application->getStoragePath('fizl/views'));
     }
 }

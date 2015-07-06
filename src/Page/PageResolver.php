@@ -1,6 +1,5 @@
 <?php namespace Anomaly\FizlModule\Page;
 
-use Illuminate\Routing\Route;
 use Illuminate\View\Factory;
 
 /**
@@ -22,31 +21,23 @@ class PageResolver
     protected $view;
 
     /**
-     * The route instance.
-     *
-     * @var Route
-     */
-    protected $route;
-
-    /**
      * Create a new PageResolver instance.
      *
      * @param Factory $view
-     * @param Route   $route
      */
-    function __construct(Factory $view, Route $route)
+    function __construct(Factory $view)
     {
-        $this->view  = $view;
-        $this->route = $route;
+        $this->view = $view;
     }
 
     /**
-     * Locate and return the page.
+     * Resolve a path to a page.
      *
-     * @return \Illuminate\View\View
+     * @param $path
+     * @return Page
      */
-    public function resolve()
+    public function resolve($path)
     {
-        return $this->view->make(array_get($this->route->getAction(), 'path'));
+        return new Page($this->view->make($path));
     }
 }

@@ -1,9 +1,8 @@
 <?php namespace Anomaly\FizlModule\Http\Controller;
 
-use Anomaly\FizlModule\Page\PageResolver;
+use Anomaly\FizlModule\Page\PageResponse;
 use Anomaly\Streams\Platform\Http\Controller\PublicController;
 use Illuminate\Routing\Route;
-use Illuminate\View\Factory;
 
 /**
  * Class FizlController
@@ -17,15 +16,14 @@ class FizlController extends PublicController
 {
 
     /**
-     * Return a routed view.
+     * Return a fizl page response.
      *
-     * @param Route   $route
-     * @param Factory $view
+     * @param PageResponse $response
+     * @param Route        $route
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function view(PageResolver $resolver)
+    public function view(PageResponse $response, Route $route)
     {
-        $view = $resolver->resolve();
-
-        return $view->render();
+        return $response->send(array_get($route->getAction(), 'path'));
     }
 }

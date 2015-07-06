@@ -4,14 +4,14 @@ use Illuminate\Http\Request;
 use Illuminate\View\Factory;
 
 /**
- * Class PageMapper
+ * Class PageLocator
  *
  * @link          http://anomaly.is/streams-platform
  * @author        AnomalyLabs, Inc. <hello@anomaly.is>
  * @author        Ryan Thompson <ryan@anomaly.is>
  * @package       Anomaly\FizlModule\Page
  */
-class PageMapper
+class PageLocator
 {
 
     /**
@@ -29,7 +29,7 @@ class PageMapper
     protected $request;
 
     /**
-     * Create a new PageMapper instance.
+     * Create a new PageLocator instance.
      *
      * @param Factory $view
      * @param Request $request
@@ -48,7 +48,15 @@ class PageMapper
      */
     public function locate($path)
     {
-        $path = 'storage::fizl/content/' . str_replace('.', '-', $path);
+        $path = 'storage::fizl/views/content/' . implode(
+                '/',
+                array_map(
+                    function ($segment) {
+                        return str_slug(str_replace('.', '-', $segment), '-');
+                    },
+                    explode('/', $path)
+                )
+            );
 
         if ($this->view->exists($path) || $this->view->exists($path .= '/index')) {
             return $path;

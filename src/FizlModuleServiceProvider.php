@@ -1,6 +1,6 @@
 <?php namespace Anomaly\FizlModule;
 
-use Anomaly\FizlModule\Page\PageMapper;
+use Anomaly\FizlModule\Page\PageLocator;
 use Anomaly\Streams\Platform\Addon\AddonServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
@@ -28,17 +28,26 @@ class FizlModuleServiceProvider extends AddonServiceProvider
     ];
 
     /**
+     * The addon plugins.
+     *
+     * @var array
+     */
+    protected $plugins = [
+        'Anomaly\FizlModule\FizlModulePlugin'
+    ];
+
+    /**
      * Map additional routes.
      *
-     * @param PageMapper $mapper
-     * @param Router     $router
-     * @param Request    $request
+     * @param PageLocator $locator
+     * @param Router      $router
+     * @param Request     $request
      */
-    public function map(PageMapper $mapper, Router $router, Request $request)
+    public function map(PageLocator $locator, Router $router, Request $request)
     {
         $path = ltrim($request->getRequestUri(), '/');
 
-        if ($path = $mapper->locate($path)) {
+        if ($path = $locator->locate($path)) {
             $router->any(
                 $request->getRequestUri(),
                 [
