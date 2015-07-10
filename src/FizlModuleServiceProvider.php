@@ -16,6 +16,10 @@ use Illuminate\Routing\Router;
 class FizlModuleServiceProvider extends AddonServiceProvider
 {
 
+    protected $routes = [
+        'admin/fizl' => 'Anomaly\FizlModule\TestController@test'
+    ];
+
     /**
      * The event listeners.
      *
